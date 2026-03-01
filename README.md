@@ -1,3 +1,10 @@
+PT/BR
+
+Criação e concepção:
+Antônio Altvater
+Guilherme Revoredo
+
+
 💳 Paga Eu - Prova de Conceito (PoC)
 O Paga Eu é uma ferramenta de pagamento rápido e simplificado, projetada para ser uma solução de resiliência financeira em cenários onde a tecnologia convencional falha.
 

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paga Eu - Assistente de Pagamentos</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
+    
     <style>
         :root {
             --primary-color: #003399;
@@ -19,409 +18,194 @@
             --border-radius: 16px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
             background-color: var(--secondary-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; padding: 20px;
         }
 
         .container {
-            background: var(--white);
-            width: 100%;
-            max-width: 420px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            background: var(--white); width: 100%; max-width: 420px;
+            border-radius: var(--border-radius); box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
-        /* Navegação */
-        .tabs {
-            display: flex;
-            background: #f1f5f9;
-            padding: 6px;
-        }
-
+        .tabs { display: flex; background: #f1f5f9; padding: 6px; }
         .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: none;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            color: var(--text-muted);
-            border-radius: 10px;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            flex: 1; padding: 12px; border: none; background: none;
+            font-size: 11px; font-weight: 800; cursor: pointer;
+            color: var(--text-muted); border-radius: 10px; transition: 0.2s;
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
+        .tab-btn.active { background: var(--white); color: var(--primary-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        .tab-btn.active {
-            background: var(--white);
-            color: var(--primary-color);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
+        .content { padding: 30px; display: none; }
+        .content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .content {
-            padding: 30px;
-            display: none;
-        }
+        header { text-align: center; margin-bottom: 25px; }
+        header h1 { color: var(--primary-color); font-size: 24px; font-weight: 800; }
+        header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
-        .content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; color: #4b5563; }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(5px);
-            }
+        .key-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        .key-type-btn { padding: 10px; border: 1px solid #e5e7eb; background: var(--white); border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; color: var(--text-muted); }
+        .key-type-btn.active { background: #eff6ff; color: var(--primary-color); border-color: var(--primary-color); }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        input { width: 100%; padding: 14px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-weight: 600; outline: none; }
+        input:focus { border-color: var(--primary-color); }
 
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+        .btn-main { width: 100%; padding: 16px; background: var(--primary-color); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; }
 
-        header h1 {
-            color: var(--primary-color);
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
+        .apoio-container { text-align: center; }
+        .apoio-msg { font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; font-style: italic; }
+        .apoio-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+        .apoio-qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        .apoio-key-badge { background: #f1f5f9; padding: 8px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; color: var(--text-main); border: 1px solid #e2e8f0; word-break: break-all; }
 
-        header p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #4b5563;
-        }
-
-        .key-selector {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .key-type-btn {
-            padding: 10px;
-            border: 1px solid #e5e7eb;
-            background: var(--white);
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            color: var(--text-muted);
-        }
-
-        .key-type-btn.active {
-            background: #eff6ff;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-        }
-
-        input::placeholder {
-            color: #d1d5db;
-        }
-
-        .btn-main {
-            width: 100%;
-            padding: 16px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-main:hover {
-            opacity: 0.9;
-        }
-
-        /* Aba de Apoio */
-        .apoio-container {
-            text-align: center;
-        }
-
-        .apoio-msg {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-
-        .apoio-sub {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .apoio-qrcode {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .apoio-key-badge {
-            background: #f1f5f9;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-main);
-            border: 1px solid #e2e8f0;
-            display: inline-block;
-        }
-
-        #result-area {
-            margin-top: 25px;
-            border-top: 2px dashed #f1f5f9;
-            padding-top: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        #qrcode-result {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .copy-box {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 10px;
-            word-break: break-all;
-            margin-bottom: 15px;
-            border: 1px solid #f1f5f9;
-            color: var(--text-muted);
-        }
+        #result-area { margin-top: 25px; border-top: 2px dashed #f1f5f9; padding-top: 25px; text-align: center; display: none; }
+        #qrcode-result { display: flex; justify-content: center; margin-bottom: 20px; }
+        .copy-box { background: #f8fafc; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 10px; word-break: break-all; margin-bottom: 15px; border: 1px solid #f1f5f9; }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <nav class="tabs">
-            <button class="tab-btn active" onclick="switchTab('gerador', this)">Gerador</button>
-            <button class="tab-btn" onclick="switchTab('apoio', this)">Apoio</button>
-        </nav>
+<div class="container">
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab('gerador', this)">Gerador</button>
+        <button class="tab-btn" onclick="switchTab('apoio', this)">Apoio</button>
+    </nav>
 
-        <div id="gerador" class="content active">
-            <header>
-                <h1>Paga Eu</h1>
-                <p>Emita sua cobrança com segurança</p>
-            </header>
-
-            <div class="form-group">
-                <label>Tipo de Chave</label>
-                <div class="key-selector">
-                    <button class="key-type-btn active" onclick="setKeyType('cpf', this)">CPF</button>
-                    <button class="key-type-btn" onclick="setKeyType('tel', this)">Celular</button>
-                    <button class="key-type-btn" onclick="setKeyType('email', this)">E-mail</button>
-                    <button class="key-type-btn" onclick="setKeyType('random', this)">Aleatória</button>
-                </div>
-                <input type="text" id="pix-key" placeholder="000.000.000-00">
+    <div id="gerador" class="content active">
+        <header><h1>Paga Eu</h1><p>Emissão de Cobrança Offline</p></header>
+        <div class="form-group">
+            <label>Tipo de Chave</label>
+            <div class="key-selector">
+                <button class="key-type-btn active" onclick="setKeyType('cpf', this)">CPF</button>
+                <button class="key-type-btn" onclick="setKeyType('tel', this)">Celular</button>
+                <button class="key-type-btn" onclick="setKeyType('email', this)">E-mail</button>
+                <button class="key-type-btn" onclick="setKeyType('random', this)">Aleatória</button>
             </div>
-
-            <div class="form-group">
-                <label>Valor da Cobrança</label>
-                <input type="tel" id="pix-amount" placeholder="R$ 0,00">
-            </div>
-
-            <div class="form-group">
-                <label>Nome do Recebedor</label>
-                <input type="text" id="pix-name" placeholder="Nome Completo">
-            </div>
-
-            <button class="btn-main" onclick="generateAll()">Gerar QR Code</button>
-
-            <div id="result-area">
-                <div id="qrcode-result"></div>
-                <div class="copy-box" id="pix-code-text"></div>
-                <button class="btn-main" style="background:var(--success-color)" onclick="copyCode()">Copiar Código
-                    Pix</button>
-            </div>
+            <input type="text" id="pix-key" placeholder="000.000.000-00">
         </div>
-
-        <div id="apoio" class="content">
-            <header>
-                <h1>Apoio ao Projeto</h1>
-            </header>
-            <div class="apoio-container">
-                <p class="apoio-msg">"Pague quando puder, se puder."</p>
-                <p class="apoio-sub">Sua contribuição mantém este projeto público e ajuda no desenvolvimento de novas
-                    funções.</p>
-
-                <div class="apoio-qrcode" id="qrcode-apoio"></div>
-
-                <div class="apoio-key-badge" style="font-size: 10px; word-break: break-all;">
-                    Chave Aleatória: 52806ce2-7edb-4f89-9003-f8d199feb4f6
-                </div>
-            </div>
+        <div class="form-group"><label>Valor</label><input type="tel" id="pix-amount" placeholder="R$ 0,00"></div>
+        <div class="form-group"><label>Nome do Recebedor</label><input type="text" id="pix-name" placeholder="Ex: ANTONIO"></div>
+        <button class="btn-main" onclick="generateAll()">Gerar QR Code</button>
+        <div id="result-area">
+            <div id="qrcode-result"></div>
+            <div class="copy-box" id="pix-code-text"></div>
+            <button class="btn-main" style="background:var(--success-color)" onclick="copyCode()">Copiar Código</button>
         </div>
     </div>
 
-    <script>
-        let currentType = 'cpf';
-        const inputKey = document.getElementById('pix-key');
-        const inputAmount = document.getElementById('pix-amount');
-        const inputName = document.getElementById('pix-name');
-        const qrcodeApoioContainer = document.getElementById('qrcode-apoio');
+    <div id="apoio" class="content">
+        <header><h1>Apoio ao Projeto</h1></header>
+        <div class="apoio-container">
+            <p class="apoio-msg">"Pague quando puder, se puder."</p>
+            <p class="apoio-sub">Sua doação ajuda a manter a ferramenta online.</p>
+            <div class="apoio-qrcode" id="qrcode-apoio"></div>
+            <div class="apoio-key-badge">Chave: 52806ce2-7edb-4f89-9003-f8d199feb4f6</div>
+        </div>
+    </div>
+</div>
 
-        // MÁSCARA DE MOEDA
-        inputAmount.addEventListener('input', (e) => {
-            let v = e.target.value.replace(/\D/g, '');
-            v = (v / 100).toFixed(2) + '';
-            v = v.replace(".", ",");
-            v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
-            v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
-            e.target.value = v ? "R$ " + v : "";
-        });
+<script>
+    let currentType = 'cpf';
+    const inputKey = document.getElementById('pix-key');
+    const inputAmount = document.getElementById('pix-amount');
+    const inputName = document.getElementById('pix-name');
+    const qrcodeApoioContainer = document.getElementById('qrcode-apoio');
 
-        // MÁSCARAS DE CHAVE (CPF/TEL)
-        inputKey.addEventListener('input', (e) => {
-            let v = e.target.value;
-            if (currentType === 'cpf') {
-                v = v.replace(/\D/g, '').substring(0, 11);
-                v = v.replace(/(\d{3})(\d)/, "$1.$2");
-                v = v.replace(/(\d{3})(\d)/, "$1.$2");
-                v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-            } else if (currentType === 'tel') {
-                v = v.replace(/\D/g, '').substring(0, 11);
-                v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-                v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+    // MÁSCARAS
+    inputAmount.addEventListener('input', (e) => {
+        let v = e.target.value.replace(/\D/g, '');
+        v = (v / 100).toFixed(2) + '';
+        v = v.replace(".", ",");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        e.target.value = v ? "R$ " + v : "";
+    });
+
+    inputKey.addEventListener('input', (e) => {
+        let v = e.target.value;
+        if (currentType === 'cpf') {
+            v = v.replace(/\D/g, '').substring(0, 11);
+            v = v.replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        } else if (currentType === 'tel') {
+            v = v.replace(/\D/g, '').substring(0, 11);
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d)(\d{4})$/, "$1-$2");
+        }
+        e.target.value = v;
+    });
+
+    function setKeyType(type, btn) {
+        currentType = type; inputKey.value = "";
+        document.querySelectorAll('.key-type-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active'); btn.classList.add('active');
+        if(tabId === 'apoio' && qrcodeApoioContainer.innerHTML === "") {
+            const pay = generatePayload("52806ce2-7edb-4f89-9003-f8d199feb4f6", "5.00", "PAGA EU APOIO");
+            new QRCode(qrcodeApoioContainer, { text: pay, width: 180, height: 180, colorDark: "#003399" });
+        }
+    }
+
+    // CRC16 CCITT-FALSE
+    function crc16(data) {
+        let crc = 0xFFFF;
+        for (let i = 0; i < data.length; i++) {
+            crc ^= data.charCodeAt(i) << 8;
+            for (let j = 0; j < 8; j++) {
+                if ((crc & 0x8000) !== 0) crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+                else crc = (crc << 1) & 0xFFFF;
             }
-            e.target.value = v;
-        });
-
-        function setKeyType(type, btn) {
-            currentType = type;
-            inputKey.value = "";
-            document.querySelectorAll('.key-type-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const hints = { 'cpf': '000.000.000-00', 'tel': '(00) 00000-0000', 'email': 'exemplo@email.com', 'random': 'Chave aleatória' };
-            inputKey.placeholder = hints[type];
         }
+        return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+    }
 
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-            if (tabId === 'apoio' && qrcodeApoioContainer.innerHTML === "") {
-                // Nova Chave Aleatória: 52806ce2-7edb-4f89-9003-f8d199feb4f6
-                const chaveApoio = "52806ce2-7edb-4f89-9003-f8d199feb4f6";
-                // Gerando o payload (Valor sugerido de R$ 5,00 para apoio, mas pode ser qualquer valor)
-                const payloadApoio = generatePayload(chaveApoio, "5.00", "PAGA EU APOIO");
+    function formatEMV(id, val) {
+        return id + String(val).length.toString().padStart(2, '0') + val;
+    }
 
-                new QRCode(qrcodeApoioContainer, {
-                    text: payloadApoio,
-                    width: 180,
-                    height: 180,
-                    colorDark: "#003399" // Cor azul bancária do projeto
-                });
-            }
-        }
+    function generatePayload(key, amount, name) {
+        // Limpeza rigorosa: Sem acentos, maiúsculas e sem espaços extras
+        const cleanName = name.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+        const PIX_GUI = "0014br.gov.bcb.pix";
+        const keyField = formatEMV("01", key);
+        const merchantAcct = formatEMV("26", PIX_GUI + keyField);
+        const amtField = formatEMV("54", parseFloat(amount).toFixed(2));
+        const nmField = formatEMV("59", cleanName);
+        
+        let payload = "000201" + merchantAcct + "520400005303986" + amtField + "5802BR" + nmField + "6009SAO PAULO62070503***6304";
+        return payload + crc16(payload);
+    }
 
-        // LÓGICA PIX (CRC16)
-        function crc16(data) {
-            let crc = 0xFFFF;
-            for (let i = 0; i < data.length; i++) {
-                crc ^= data.charCodeAt(i) << 8;
-                for (let j = 0; j < 8; j++) {
-                    if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
-                    else crc = (crc << 1);
-                }
-            }
-            return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
-        }
+    function generateAll() {
+        const rawAmt = inputAmount.value.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
+        let cleanKey = inputKey.value.replace(/[.\-() ]/g, '');
+        if (currentType === 'tel') cleanKey = '55' + cleanKey;
+        
+        if(!cleanKey || !rawAmt || !inputName.value) return alert("Preencha todos os campos.");
 
-        function generatePayload(key, amount, name) {
-            const cleanName = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
-            const PIX_GUI = "0014br.gov.bcb.pix";
-            const keyField = "01" + key.length.toString().padStart(2, '0') + key;
-            const merchantAccount = "26" + (PIX_GUI.length + keyField.length).toString().padStart(2, '0') + PIX_GUI + keyField;
-            const amountField = "54" + amount.length.toString().padStart(2, '0') + amount;
-            const merchantName = "59" + cleanName.length.toString().padStart(2, '0') + cleanName;
+        const code = generatePayload(cleanKey, rawAmt, inputName.value);
+        document.getElementById('pix-code-text').innerText = code;
+        document.getElementById('result-area').style.display = 'block';
+        const res = document.getElementById('qrcode-result');
+        res.innerHTML = ""; new QRCode(res, { text: code, width: 200, height: 200 });
+    }
 
-            let payload = "000201" + merchantAccount + "520400005303986" + amountField + "5802BR" + merchantName + "6009SAO PAULO62070503***6304";
-            return payload + crc16(payload);
-        }
-
-        function generateAll() {
-            const rawAmount = inputAmount.value.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
-            const cleanKey = currentType === 'tel' ? '55' + inputKey.value.replace(/\D/g, '') : inputKey.value.replace(/[.\-() ]/g, '');
-
-            if (!cleanKey || !rawAmount || !inputName.value) return alert("Preencha todos os campos.");
-
-            const code = generatePayload(cleanKey, parseFloat(rawAmount).toFixed(2), inputName.value);
-            document.getElementById('pix-code-text').innerText = code;
-            document.getElementById('result-area').style.display = 'block';
-
-            const resContainer = document.getElementById('qrcode-result');
-            resContainer.innerHTML = "";
-            new QRCode(resContainer, { text: code, width: 180, height: 180 });
-        }
-
-        function copyCode() {
-            navigator.clipboard.writeText(document.getElementById('pix-code-text').innerText);
-            alert("Código Pix copiado!");
-        }
-    </script>
-
+    function copyCode() {
+        navigator.clipboard.writeText(document.getElementById('pix-code-text').innerText);
+        alert("Pix Copiado!");
+    }
+</script>
 </body>
-
 </html>

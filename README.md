@@ -1,7 +1,7 @@
 PT/BR
 
 Criação e concepção:
-Antônio Altvater
+Antônio Altvater,
 Guilherme Revoredo
 
 

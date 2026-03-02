@@ -1,84 +1,71 @@
-# 💳 Paga Eu - V3.0 (Global Edition)
+# 💳 Paga Eu - V3.2 (Global & Accessible Edition)
 
-**Criação e Concepção:** * **Antônio Altvater**
+**Criação e Concepção:**
+* **Antônio Altvater**
 * **Guilherme Revoredo**
 
-O **Paga Eu** (conhecido como o *"Doom do Pix"*) é uma ferramenta de pagamento rápido e resiliente, projetada para funcionar onde a infraestrutura convencional falha. Na **V3.0**, o projeto rompe fronteiras com um motor de internacionalização nativo, focado em zonas de crise, isolamento geográfico e missões humanitárias globais.
+O **Paga Eu** (conhecido como o *"Doom do Pix"*) é um gerador de QR Code Pix offline, projetado para garantir a continuidade de pagamentos em situações de crise. Na versão **V3.2**, o projeto atinge a excelência técnica com foco em acessibilidade universal e internacionalização, permitindo que a ferramenta seja usada em contextos humanitários globais.
+
+## 🏆 Qualidade Garantida (Lighthouse)
+
+A ferramenta foi auditada com pontuação máxima em pilares fundamentais para software de utilidade pública:
+
+![Resultado do Lighthouse - 100 Performance, 100 Acessibilidade, 100 Boas Práticas](Captura%20de%20tela%20de%202026-03-02%2010-11-12.png)
 
 ---
 
-## 🌍 Novidade V3.0: Internacionalização (i18n)
+## ⛈️ Resiliência e Emergência
 
-A V3.0 introduz suporte nativo a quatro idiomas estratégicos, permitindo que a ferramenta seja operada em diferentes continentes sem necessidade de tradução externa ou conexão com a internet:
+O projeto foi pensado estrategicamente para localidades com difícil acesso à internet ou situações de calamidade pública, como chuvas intensas e tempestades:
 
-* **🇧🇷 Português (PT-BR):** Contexto nativo do Pix brasileiro.
-* **🇫🇷 Français (FR):** Atendimento para França, Canadá e vasta região da África Ocidental e Central.
-* **🇪🇸 Español (ES):** Resiliência para toda a América Latina e Espanha.
-* **🇨🇩 Lingala (LN):** Foco humanitário específico para a **República Democrática do Congo** e região do Congo-Brazzaville, onde a estabilidade econômica offline é vital.
+* **Operação 100% Offline:** Uma vez carregado, gera cobranças Pix sem depender de sinal de dados ou Wi-Fi.
+* **Portabilidade Física:** Composto por arquivos que totalizam apenas **33kb**, pode ser transportado via pen drive ou outros meios físicos.
+* **Kit de Emergência Digital:** Projetado para ser distribuído em comunidades isoladas para manter a economia girando em situações críticas.
+* **Privacidade Total:** Nenhum dado sai do dispositivo do usuário; todo o processamento é realizado localmente.
 
 ---
 
-## ⛈️ Resiliência em Situações de Crise 
+## ♿ Acessibilidade e i18n (V3.2)
 
-Diferente de soluções que dependem da nuvem, o **Paga Eu** foi construído para ser um **Kit de Emergência Digital**:
+A V3.2 foca na inclusão de todos os usuários através de melhorias rigorosas:
 
-* **Autonomia Total:** Funciona 100% offline após o carregamento inicial ou via arquivo local.
-* **Distribuição Física:** O projeto ocupa apenas **33kb** no total. Pode ser transportado via pen drive, cartão SD ou transmitido via Bluetooth/Rádio entre dispositivos.
-* **Privacidade:** Processamento **100% local**. Nenhum dado financeiro ou pessoal sai do navegador.
-* **O "Doom do Pix":** Assim como o lendário jogo, se o dispositivo tem uma tela e um navegador (mesmo que antigo), ele vai rodar o Paga Eu.
+* **Conformidade WCAG 2.1:** Cores de alto contraste e navegação otimizada para teclados e leitores de tela.
+* **Internacionalização Nativa:** Suporte embutido para **Português (BR)**, **Francês (FR)**, **Espanhol (ES)** e **Lingala (LN)**.
+* **Leitura Assistiva:** O sistema ajusta automaticamente as tags de idioma para que leitores de tela usem a pronúncia correta em todos os idiomas suportados.
 
 ---
 
 ## 🚀 Funcionalidades
 
-* **Motor i18n Nativo:** Seletor instantâneo de idiomas integrado na interface.
-* **Pix Estático:** Geração de payloads no padrão EMV QRCPS (Banco Central do Brasil).
-* **Máscaras Inteligentes:** Formatação visual em tempo real para CPF, Celular e Moeda (BRL) embutida nos campos.
-* **Layout Adaptável:** Interface profissional otimizada para dispositivos modernos e legados.
-* **Aba de Apoio:** Sistema integrado para contribuições voluntárias ao projeto.
+* **Pix Estático:** Geração instantânea seguindo o padrão EMV QRCPS do Banco Central.
+* **Máscaras Inteligentes:** Formatação automática para CPF, Celular e Moeda (BRL) integrada aos campos.
+* **Aba de Apoio:** Canal para contribuições voluntárias que mantêm o projeto público.
 
 ---
 
-## 💻 Tabela de Compatibilidade
+## 💻 Compatibilidade Universal
 
-Graças ao motor de renderização híbrido (**SVG / Canvas / Table**), o Paga Eu roda em praticamente qualquer hardware.
-
-| Dispositivo / SO | Compatibilidade | Modo de Renderização | Uso Recomendado |
-| :--- | :---: | :--- | :--- |
-| **Android (Todas as versões)** | ✅ Total | Canvas / SVG | Smartphone de campo |
-| **iPhone / iOS** | ✅ Total | SVG | Uso cotidiano e PWA |
-| **Windows / Zorin OS / Mac** | ✅ Total | SVG / Canvas | Desktop / Centros de Apoio |
-| **Navegadores Legados (IE6+)** | ✅ Total | HTML Table | Computadores antigos/doação |
-| **Pen Drive / Mídia Física** | ✅ Total | Local File System | Emergências sem Internet |
-| **Raspberry Pi / POS Terminal** | ✅ Total | Canvas | Totens de atendimento |
+| Dispositivo / SO | Acessibilidade | Performance | Renderização |
+| :--- | :---: | :---: | :--- |
+| **Android / iOS** | ✅ 100 | ✅ 100 | Canvas / SVG |
+| **Windows / Zorin OS** | ✅ 100 | ✅ 100 | SVG / Canvas |
+| **Navegadores Legados** | ✅ Sim | ✅ Alta | HTML Table |
+| **Mídia Física (USB)** | ✅ Total | ✅ Instantânea | Local File System |
 
 ---
 
-## 📥 Instalação e Uso
+## 📥 Instalação
 
-O projeto é composto por dois arquivos essenciais que devem ser mantidos na mesma pasta:
+O projeto é autossuficiente e exige apenas dois arquivos na mesma pasta:
 
-1.  **`index.html` (14kb):** Interface, dicionário de idiomas e lógica de negócio.
-2.  **`qrcode.min.js` (19kb):** Motor matemático de geração do código.
-
-### Instruções:
-1.  Faça o download de ambos os arquivos.
-2.  Abra o arquivo `index.html` em qualquer navegador.
-3.  **Para Emergências:** Mantenha uma cópia desta pasta em um pen drive ou cartão SD.
-
----
-
-## 🌍 O Futuro: BRICS Pay
-
-A arquitetura da V3.0 pavimenta o caminho para a integração com o sistema **BRICS Pay**. O objetivo é transformar o Paga Eu em uma ponte financeira internacional, suportando pagamentos em moedas do bloco (**Yuan, Rublo, Rúpia, etc.**) em situações de comércio transfronteiriço ou ajuda humanitária global.
+1.  **`index.html` (14kb):** Interface e lógica.
+2.  **`qrcode.min.js` (19kb):** Motor matemático offline.
 
 ---
 
 ## ❤️ Apoie o Projeto
 
 > "Pague quando puder, se puder."
-
-Sua contribuição garante que este código permaneça público, aberto e útil para quem mais precisa.
 
 **Chave Aleatória Pix:** `52806ce2-7edb-4f89-9003-f8d199feb4f6`
 

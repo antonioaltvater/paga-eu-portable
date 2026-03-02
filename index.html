@@ -166,7 +166,51 @@
         }
     }
 
-    // ... (Manter funções crc16, genPay e máscaras do código anterior) ...
+    // =============================
+// CRC16 (Obrigatório para PIX)
+// =============================
+function crc16(str) {
+    let crc = 0xFFFF;
+    for (let c = 0; c < str.length; c++) {
+        crc ^= str.charCodeAt(c) << 8;
+        for (let i = 0; i < 8; i++) {
+            if ((crc & 0x8000) !== 0) {
+                crc = (crc << 1) ^ 0x1021;
+            } else {
+                crc <<= 1;
+            }
+        }
+    }
+    return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+}
+
+// =============================
+// GERADOR DE PAYLOAD PIX
+// =============================
+function genPay(key, amount, name) {
+
+    function f(id, value) {
+        return id + value.length.toString().padStart(2, '0') + value;
+    }
+
+    const payload =
+        f("00", "01") +                                   // Payload Format
+        f("26",
+            f("00", "br.gov.bcb.pix") +
+            f("01", key)
+        ) +
+        f("52", "0000") +                                  // MCC
+        f("53", "986") +                                   // BRL
+        f("54", parseFloat(amount).toFixed(2)) +           // Valor
+        f("58", "BR") +
+        f("59", name.substring(0, 25)) +                   // Nome
+        f("60", "BRASILIA") +                              // Cidade padrão
+        "6304";                                            // CRC placeholder
+
+    const crc = crc16(payload);
+
+    return payload + crc;
+}
 
     function generateAll() {
         const a = document.getElementById('pix-amount').value.replace("R$ ", "").replace(/\./g, "").replace(",", ".");

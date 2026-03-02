@@ -10,7 +10,7 @@ O **Paga Eu** (conhecido como o *"Doom do Pix"*) é um gerador de QR Code Pix of
 
 A ferramenta foi auditada com pontuação máxima em pilares fundamentais para software de utilidade pública:
 
-![Resultado do Lighthouse - 100 Performance, 100 Acessibilidade, 100 Boas Práticas](Captura%20de%20tela%20de%202026-03-02%2010-11-12.png)
+!Resultado do Lighthouse - 100 Performance, 100 Acessibilidade, 100 Boas Práticas
 
 ---
 

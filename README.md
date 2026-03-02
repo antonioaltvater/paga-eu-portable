@@ -14,49 +14,49 @@ A ferramenta foi auditada com pontuação máxima em pilares fundamentais para s
 
 ---
 
-## 🛡️ Diferenciais e Ecossistema Open Source
+## 📖 Simulações de Impacto (Cenários Ficcionais)
 
-Embora existam diversas ferramentas de código aberto voltadas para o ecossistema Pix, o **Paga Eu** ocupa um nicho exclusivo de **Tecnologia Humanitária** e **Resiliência Extrema**. 
+> **Nota Importante:** As histórias abaixo são **simulações teóricas** criadas para ilustrar o potencial de resiliência e alcance da ferramenta em cenários críticos. Elas não representam eventos reais ou casos de uso confirmados.
 
-### Comparativo de Funcionalidades:
-* **Integração Web:** Enquanto muitas soluções funcionam como bibliotecas para desenvolvedores ou dependem de complexas cadeias de pacotes para a construção do payload, o **Paga Eu** é entregue como um arquivo pronto para uso final, sem necessidade de conhecimento técnico prévio.
-* **Versatilidade de Linguagens:** Existem implementações robustas em diversas linguagens de servidor (como Python, PHP e Go) voltadas para automação. O **Paga Eu**, por outro lado, foca na execução direta no navegador do cliente, garantindo portabilidade total.
-* **Operação em Ambientes Restritos:** Diferente de ferramentas que exigem conexão com a internet para validação ou geração, esta solução garante 100% de autonomia offline em um pacote de apenas **33kb**.
-* **Inclusão e Alcance Global:** A maioria das ferramentas foca apenas na geração técnica do código. O **Paga Eu** é a única solução com score **100/100 em Acessibilidade** e suporte nativo ao **Lingala (LN)**, facilitando operações em missões internacionais onde outros sistemas não chegam.
+### ⛈️ Cenário A: Isolamento por Calamidade Climática
+Em uma simulação de tempestade severa onde as torres de comunicação e a fibra óptica foram destruídas, o comércio local ficaria paralisado. 
+* **Aplicação:** Utilizando o **Paga Eu** instalado como **PWA** (aplicativo de tela), um comerciante conseguiria gerar cobranças de itens básicos sem depender de sinal de operadora. O cliente, ao capturar o código, garante o registro da transação para liquidação assim que encontrar qualquer ponto de conectividade mínima.
+
+### 🌍 Cenário B: Apoio em Missões Humanitárias Internacionais
+Imagine uma missão de paz ou apoio em regiões com infraestrutura bancária inexistente e diversidade linguística. 
+* **Aplicação:** Com apenas **33kb**, a ferramenta seria distribuída via **mídia física** (pen drives ou cartões SD). Ao selecionar o idioma **Lingala (LN)**, voluntários e beneficiários locais teriam autonomia para operar transações simples em sua língua nativa, garantindo transparência e dignidade no fluxo financeiro emergencial.
+
+### 📟 Cenário C: O "Doom do Pix" em Hardware de Doação
+Em zonas de conflito ou extrema pobreza, onde o único hardware disponível são computadores legados movidos a geradores.
+* **Aplicação:** O projeto poderia ser executado diretamente de um **disquete**. Mesmo em navegadores antigos e telas de baixa resolução, o motor de renderização híbrido garantiria a exibição do QR Code através de tabelas HTML, permitindo que o sistema de pagamentos funcionasse em máquinas que outros softwares modernos não conseguem sequer carregar.
 
 ---
 
-## ⛈️ Resiliência e Emergência
+## 🛡️ Diferenciais e Ecossistema Open Source
 
-O projeto foi pensado estrategicamente para localidades com difícil acesso à internet ou situações de calamidade pública:
+Embora existam ferramentas voltadas para o ecossistema Pix, o **Paga Eu** foca exclusivamente em **Tecnologia Humanitária**:
 
-* **Operação 100% Offline:** Uma vez carregado, gera cobranças Pix sem depender de sinal de dados ou Wi-Fi.
-* **Portabilidade Física:** Composto por arquivos que totalizam apenas **33kb**, pode ser transportado via pen drive ou outros meios físicos.
-* **Privacidade Total:** Nenhum dado sai do dispositivo do usuário; todo o processamento é realizado localmente.
+* **Independência de Frameworks:** Enquanto muitas soluções são bibliotecas para desenvolvedores, o **Paga Eu** é um produto final pronto para uso por leigos.
+* **Execução Client-Side:** Diferente de geradores que dependem de linguagens de servidor para validação, esta solução garante 100% de autonomia no navegador.
+* **Inclusão Radical:** É a única ferramenta de sua categoria com score **100/100 em Acessibilidade**, preparada para leitores de tela e navegação assistida em múltiplos idiomas.
 
 ---
 
 ## ♿ Inclusão Universal (V3.2)
 
-* **Conformidade WCAG 2.1:** Cores de alto contraste e navegação otimizada para teclados e leitores de tela.
-* **Internacionalização Nativa:** Suporte embutido para **Português (BR)**, **Francês (FR)**, **Espanhol (ES)** e **Lingala (LN)**.
-* **Leitura Assistiva:** Tags de idioma dinâmicas para que leitores de tela usem a pronúncia correta em todos os idiomas suportados.
-
----
-
-## 🚀 Funcionalidades
-
-* **Pix Estático:** Geração instantânea seguindo o padrão EMV QRCPS do Banco Central.
-* **Máscaras Inteligentes:** Formatação automática para CPF, Celular e Moeda (BRL) integrada aos campos.
-* **Aba de Apoio:** Canal para contribuições voluntárias que mantêm o projeto público.
+* **Conformidade WCAG 2.1:** Cores de alto contraste e navegação otimizada para teclados.
+* **Internacionalização Nativa:** Suporte para **Português (BR)**, **Francês (FR)**, **Espanhol (ES)** e **Lingala (LN)**.
+* **Privacidade Absoluta:** Todo o processamento do código Pix e cálculo de CRC16 ocorre localmente no dispositivo.
 
 ---
 
 ## 📥 Instalação
 
-O projeto é autossuficiente e exige apenas dois arquivos na mesma pasta:
+O projeto exige apenas dois arquivos na mesma pasta:
 1.  **`index.html` (14kb)**
 2.  **`qrcode.min.js` (19kb)**
+
+---
 
 ## ❤️ Apoie o Projeto
 

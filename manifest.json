@@ -1,0 +1,21 @@
+{
+  "name": "Paga Eu - Doom do Pix",
+  "short_name": "Paga Eu",
+  "description": "Gerador de Pix Offline de alta resiliência e acessibilidade.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#002e8a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

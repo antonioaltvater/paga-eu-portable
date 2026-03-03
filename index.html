@@ -3,293 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paga Eu - V3.5 (Doom do Pix)</title>
-    <link rel="manifest" href="manifest.json">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Paga Eu Portable V3.12</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="qrcode.min.js"></script>
-    <script src="html5-qrcode.min.js"></script>
+    <script src="html5-qrcode"></script>
     <style>
-        :root { --primary: #002e8a; --bg: #f8fafc; --text: #0f172a; --muted: #475569; --white: #ffffff; --focus: #2563eb; --success: #166534; --danger: #b91c1c; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
-        input:focus, button:focus, select:focus { outline: 3px solid var(--focus); outline-offset: 3px; }
-        .container { background: var(--white); width: 100%; max-width: 440px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); border: 1px solid #e2e8f0; overflow: hidden; }
-        .lang-bar { background: #f1f5f9; padding: 10px 15px; display: flex; justify-content: flex-end; border-bottom: 2px solid #e2e8f0; }
-        #lang-select { border: 1px solid #cbd5e1; background: var(--white); font-size: 12px; font-weight: 700; padding: 4px; border-radius: 4px; }
-        .tabs { display: flex; background: #f1f5f9; padding: 6px; gap: 4px; }
-        .tab-btn { flex: 1; padding: 12px; border: 2px solid transparent; background: none; font-size: 11px; font-weight: 800; cursor: pointer; color: var(--muted); border-radius: 10px; text-transform: uppercase; }
-        .tab-btn.active { background: var(--white); color: var(--primary); border-color: var(--primary); }
-        .content { padding: 25px; display: none; }
-        .content.active { display: block; }
-        header { text-align: center; margin-bottom: 20px; }
-        header h1 { color: var(--primary); font-size: 22px; font-weight: 800; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; font-weight: 800; margin-bottom: 6px; }
-        .key-selector { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 10px; }
-        .key-btn { padding: 10px; border: 2px solid #cbd5e1; background: var(--white); border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; color: var(--muted); }
-        .key-btn.active { background: #f0f7ff; color: var(--primary); border-color: var(--primary); }
-        input { width: 100%; padding: 14px; border: 2px solid #94a3b8; border-radius: 10px; font-size: 16px; font-weight: 700; }
-        .btn-main { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 8px; }
-        #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 20px; }
-        .list-item { background: #f1f5f9; padding: 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #cbd5e1; font-size: 12px; border-left: 5px solid var(--danger); }
-        .copy-box { background: #f1f5f9; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 11px; word-break: break-all; border: 2px solid #cbd5e1; margin: 10px 0; }
-        .debitos-box { background: var(--danger); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center; }
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
-<body>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
-<main class="container">
-    <div class="lang-bar">
-        <select id="lang-select" onchange="updateLang(this.value)">
-            <option value="pt">Português</option>
-            <option value="fr">Français</option>
-            <option value="es">Español</option>
-            <option value="ln">Lingala</option>
-        </select>
-    </div>
-
-    <nav class="tabs">
-        <button class="tab-btn active" id="tab-gen" onclick="switchTab('gerador', this)">Gerar</button>
-        <button class="tab-btn" id="tab-scan" onclick="switchTab('pagar', this)">Pagar</button>
-        <button class="tab-btn" id="tab-sup" onclick="switchTab('apoio', this)">Apoio</button>
-    </nav>
-
-    <div id="gerador" class="content active">
-        <header><h1 id="txt-title">Paga Eu</h1><p id="txt-sub">Cobrança Offline</p></header>
-        <div class="form-group">
-            <label id="txt-keytype">Chave</label>
-            <div class="key-selector">
-                <button class="key-btn active" onclick="setKeyType('cpf', this)">CPF</button>
-                <button class="key-btn" onclick="setKeyType('tel', this)">Celular</button>
-                <button class="key-btn" onclick="setKeyType('email', this)">E-mail</button>
-                <button class="key-btn" onclick="setKeyType('random', this)">Aleatória</button>
-            </div>
-            <input type="text" id="pix-key" placeholder="000.000.000-00">
+    <div class="max-w-xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-slate-200 overflow-hidden">
+        <div class="bg-slate-50 p-6 border-b flex justify-between items-center">
+            <h1 class="text-xl font-black text-[#002e8a] italic flex items-center gap-2 uppercase">
+                <span class="text-2xl">📱</span> Paga Eu
+            </h1>
+            <select id="langSelect" onchange="changeLang()" class="bg-white border p-2 rounded-lg text-[10px] font-bold uppercase outline-none">
+                <option value="pt">PT</option>
+                <option value="ln">LN</option>
+                <option value="fr">FR</option>
+                <option value="es">ES</option>
+            </select>
         </div>
-        <div class="form-group"><label id="txt-val">Valor</label><input type="tel" id="pix-amount" placeholder="R$ 0,00"></div>
-        <div class="form-group"><label id="txt-rec">Recebedor</label><input type="text" id="pix-name" placeholder="NOME COMPLETO"></div>
-        <div class="form-group"><label>ID do Pedido (Opcional)</label><input type="text" id="pix-id" placeholder="Ex: VENDA01" maxlength="25"></div>
-        
-        <button class="btn-main" id="btn-generate" onclick="generateAll()">Gerar QR Code</button>
-        
-        <div id="result-area" style="display:none; text-align:center; margin-top:20px; border-top: 2px dashed #eee; padding-top:20px;">
-            <div id="qrcode-res" style="display: flex; justify-content: center;"></div>
-            <div class="copy-box" id="pix-code-text"></div>
-            <button class="btn-main" style="background:var(--success)" onclick="copyCode('pix-code-text')">Copiar Código</button>
-            <button class="btn-main" style="background:var(--muted)" onclick="exportGeneratorFile()">Exportar p/ Arquivo (.txt)</button>
-        </div>
-    </div>
 
-    <div id="pagar" class="content">
-        <header><h1 id="txt-scan-title">Escanear</h1><p>Guarde e pague com sinal</p></header>
-        <div id="reader"></div>
-        
-        <div id="pending-list">
-            <div class="debitos-box">
-                <p style="font-size: 11px; font-weight: 800; text-transform: uppercase;">Total em Débitos Salvos</p>
-                <h3 id="txt-total-debitos" style="font-size: 26px; font-weight: 900;">R$ 0,00</h3>
-            </div>
+        <div class="flex p-2 gap-1 bg-slate-100/50">
+            <button onclick="showTab('gen')" id="btn-gen" class="tab-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all bg-white text-[#002e8a] shadow-sm">Gerar</button>
+            <button onclick="showTab('pay')" id="btn-pay" class="tab-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all text-slate-400">Pagar</button>
+            <button onclick="showTab('vault')" id="btn-vault" class="tab-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase transition-all text-slate-400">Cofre</button>
+        </div>
+
+        <div class="p-8 min-h-[520px]">
             
-            <h2 style="font-size: 13px; color: var(--primary); margin-bottom: 10px;">Pendentes (Cachê)</h2>
-            <div id="items-container"></div>
-            <button id="btn-export-list" class="btn-main" style="background:var(--muted); display:none; margin-top: 15px;" onclick="exportScannedList()">Exportar Relatório (.txt)</button>
+            <section id="tab-gen" class="space-y-4">
+                <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                    <button onclick="setKeyType('cpf')" class="key-type-btn px-3 py-2 rounded-lg text-[9px] font-black uppercase border-2 border-[#002e8a] bg-[#002e8a] text-white" id="kt-cpf">CPF</button>
+                    <button onclick="setKeyType('tel')" class="key-type-btn px-3 py-2 rounded-lg text-[9px] font-black uppercase border-2 border-slate-100 text-slate-400" id="kt-tel">TEL</button>
+                    <button onclick="setKeyType('email')" class="key-type-btn px-3 py-2 rounded-lg text-[9px] font-black uppercase border-2 border-slate-100 text-slate-400" id="kt-email">EMAIL</button>
+                </div>
+                
+                <input type="text" id="inputKey" placeholder="Chave Pix" class="w-full p-4 rounded-xl border-2 font-bold focus:border-[#002e8a] outline-none">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="inputAmount" placeholder="R$ 0,00" class="p-4 rounded-xl border-2 font-bold focus:border-[#002e8a] outline-none">
+                    <input type="text" id="inputID" placeholder="TXID" class="p-4 rounded-xl border-2 font-bold focus:border-[#002e8a] outline-none">
+                </div>
+                
+                <input type="text" id="inputName" placeholder="NOME DO RECEBEDOR" class="w-full p-4 rounded-xl border-2 font-bold uppercase focus:border-[#002e8a] outline-none">
+                
+                <button onclick="handleGenerate()" class="w-full bg-[#002e8a] text-white font-black py-5 rounded-2xl shadow-lg active:scale-95 transition-all">GERAR QR CODE</button>
+                
+                <div id="qrResult" class="hidden mt-6 flex flex-col items-center p-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
+                    <div id="qrcode" class="p-2 bg-white rounded-xl shadow-sm"></div>
+                    <button onclick="saveCurrentToVault()" class="mt-4 w-full bg-[#166534] text-white font-black py-3 rounded-xl text-[10px] flex items-center justify-center gap-2">💾 GUARDAR NO COFRE</button>
+                </div>
+            </section>
+
+            <section id="tab-pay" class="hidden text-center space-y-6">
+                <div id="scanner-init" class="py-20 flex flex-col items-center space-y-6">
+                    <div class="w-24 h-24 bg-slate-100 rounded-full flex justify-center items-center text-slate-300">📷</div>
+                    <button onclick="startScanner()" class="bg-[#002e8a] text-white font-black px-10 py-5 rounded-2xl shadow-xl active:scale-95 transition-all">ATIVAR SCANNER</button>
+                </div>
+                <div id="reader-container" class="hidden relative">
+                    <div id="reader" class="rounded-3xl overflow-hidden border-4 border-[#002e8a] bg-black aspect-square"></div>
+                    <button onclick="stopScanner()" class="mt-4 text-xs font-bold text-red-600 uppercase">Cancelar</button>
+                </div>
+            </section>
+
+            <section id="tab-vault" class="hidden space-y-6">
+                <div class="bg-[#b91c1c] text-white p-6 rounded-[2rem] shadow-xl flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] uppercase font-black opacity-70">Total Devido</p>
+                        <h4 id="totalDisplay" class="text-3xl font-black">R$ 0,00</h4>
+                    </div>
+                    <span class="text-2xl opacity-30">💰</span>
+                </div>
+                <div id="debtList" class="space-y-3 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar text-xs font-bold text-slate-400 italic text-center">
+                    Nenhum débito no cofre.
+                </div>
+                <button onclick="clearVault()" class="w-full text-[9px] font-black text-slate-300 uppercase hover:text-red-500 transition-colors">Limpar Tudo</button>
+            </section>
+
+        </div>
+
+        <div class="p-6 bg-slate-50 text-center border-t">
+            <p class="text-[9px] text-slate-400 font-black uppercase tracking-widest">Soberania Offline • Zorin OS Optimized</p>
         </div>
     </div>
 
-    <div id="apoio" class="content">
-        <header><h1>Apoio</h1></header>
-        <div style="text-align:center;">
-            <p style="font-weight:800; color:var(--primary);">"Pague quando puder, se puder."</p>
-            <div id="qrcode-apoio" style="margin:20px 0; display: flex; justify-content: center;"></div>
-            <p style="font-size:10px; color:var(--muted); word-break:break-all;">52806ce2-7edb-4f89-9003-f8d199feb4f6</p>
-        </div>
-    </div>
-</main>
-
-<script>
-    const i18n = {
-        pt: { title: "Paga Eu", sub: "Cobrança Offline", b_gen: "Gerar QR Code" },
-        fr: { title: "Paye-Moi", sub: "Paiement Offline", b_gen: "Générer QR Code" },
-        es: { title: "Paga Yo", sub: "Pago Offline", b_gen: "Generar QR Code" },
-        ln: { title: "Futa Ngai", sub: "Lifuta Offline", b_gen: "Bimisa QR Code" }
-    };
-
-    let curType = 'cpf';
-    let html5QrCode;
-
-    // --- GERADOR ---
-    function setKeyType(t, b) {
-        curType = t; document.getElementById('pix-key').value = "";
-        document.querySelectorAll('.key-btn').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-    }
-
-    document.getElementById('pix-name').addEventListener('input', e => {
-        e.target.value = e.target.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z\s]/g, "").toUpperCase();
-    });
-
-    document.getElementById('pix-amount').addEventListener('input', e => {
-        let v = e.target.value.replace(/\D/g, '');
-        v = (v/100).toFixed(2).replace(".", ",").replace(/(\d)(\d{3}),/g, "$1.$2,");
-        e.target.value = v ? "R$ " + v : "";
-    });
-
-    document.getElementById('pix-key').addEventListener('input', e => {
-        let v = e.target.value;
-        if(curType==='cpf') v = v.replace(/\D/g, '').substring(0,11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-        else if(curType==='tel') v = v.replace(/\D/g, '').substring(0,11).replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d)(\d{4})$/, "$1-$2");
-        e.target.value = v;
-    });
-
-    function crc16(d) {
-        let c = 0xFFFF;
-        for(let i=0; i<d.length; i++) {
-            c ^= d.charCodeAt(i) << 8;
-            for(let j=0; j<8; j++) c = (c & 0x8000) ? (c << 1) ^ 0x1021 : (c << 1);
-        }
-        return (c & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
-    }
-
-    function fEMV(id, v) { return id + String(v).length.toString().padStart(2, '0') + v; }
-
-    function genPay(k, a, n, id) {
-        const txid = id.trim().toUpperCase().replace(/[^A-Z0-9]/g, "") || "***";
-        const me = fEMV("26", fEMV("00", "br.gov.bcb.pix") + fEMV("01", k));
-        const ad = fEMV("62", fEMV("05", txid));
-        let p = "000201" + me + "520400005303986" + fEMV("54", parseFloat(a).toFixed(2)) + "5802BR" + fEMV("59", n.substring(0, 25)) + "6009SAO PAULO" + ad + "6304";
-        return p + crc16(p);
-    }
-
-    function generateAll() {
-        const a = document.getElementById('pix-amount').value.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
-        let k = document.getElementById('pix-key').value.replace(/[.\-() ]/g, '');
-        if(curType==='tel') k = '55' + k;
-        const n = document.getElementById('pix-name').value;
-        const id = document.getElementById('pix-id').value;
-        
-        if(!k || !a || !n) return alert("Erro: Preencha todos os campos obrigatórios.");
-        
-        const code = genPay(k, a, n, id);
-        document.getElementById('pix-code-text').innerText = code;
-        document.getElementById('result-area').style.display = 'block';
-        document.getElementById('qrcode-res').innerHTML = "";
-        new QRCode("qrcode-res", { text: code, width: 200, height: 200, colorDark: "#002e8a" });
-    }
-
-    function exportGeneratorFile() {
-        const nome = document.getElementById('pix-name').value;
-        const valor = document.getElementById('pix-amount').value;
-        const chave = document.getElementById('pix-key').value;
-        const idPedido = document.getElementById('pix-id').value || "NÃO INFORMADO";
-        const codigoPix = document.getElementById('pix-code-text').innerText;
-        
-        const conteudo = `===========================================\n PAGA EU - REGISTRO DE COBRANÇA\n===========================================\nDATA/HORA: ${new Date().toLocaleString()}\nNOME: ${nome}\nVALOR: ${valor}\nTIPO DE CHAVE: ${curType.toUpperCase()}\nCHAVE: ${chave}\nID DO PEDIDO: ${idPedido}\n\nCÓDIGO PIX (COPIA E COLA):\n${codigoPix}\n===========================================`;
-        
-        const blob = new Blob([conteudo], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `Cobranca_${nome.replace(/\s+/g, '_')}_${Date.now()}.txt`;
-        link.click();
-    }
-
-    // --- DECODIFICADOR EMV ---
-    function decodePixEMV(payload) {
-        let i = 0; let data = {};
-        while (i < payload.length - 4) {
-            let tag = payload.substring(i, i + 2);
-            let len = parseInt(payload.substring(i + 2, i + 4), 10);
-            let val = payload.substring(i + 4, i + 4 + len);
-            data[tag] = val; i += 4 + len;
-        }
-        
-        let valor = data['54'] ? parseFloat(data['54']) : 0;
-        let nome = data['59'] || "DESCONHECIDO";
-        let chave = "NÃO IDENTIFICADA";
-        
-        if (data['26']) {
-            let pixData = data['26']; let j = 0;
-            while (j < pixData.length) {
-                let subTag = pixData.substring(j, j + 2);
-                let subLen = parseInt(pixData.substring(j + 2, j + 4), 10);
-                if (subTag === '01') chave = pixData.substring(j + 4, j + 4 + subLen);
-                j += 4 + subLen;
+    <script>
+        // --- MOTOR PIX ---
+        const PixEngine = {
+            crc16: (data) => {
+                let crc = 0xFFFF;
+                for (let i = 0; i < data.length; i++) {
+                    crc ^= data.charCodeAt(i) << 8;
+                    for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : (crc << 1);
+                }
+                return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+            },
+            fEMV: (id, v) => id + String(v).length.toString().padStart(2, '0') + v,
+            generate: (key, amount, name, id) => {
+                const txid = id.trim().toUpperCase().replace(/[^A-Z0-9]/g, "") || "***";
+                const cleanKey = key.replace(/[.\-() ]/g, '');
+                const me = PixEngine.fEMV("26", PixEngine.fEMV("00", "br.gov.bcb.pix") + PixEngine.fEMV("01", cleanKey));
+                const ad = PixEngine.fEMV("62", PixEngine.fEMV("05", txid));
+                let p = "000201" + me + "520400005303986" + PixEngine.fEMV("54", parseFloat(amount).toFixed(2)) + "5802BR" + PixEngine.fEMV("59", name.substring(0, 25)) + "6009SAO PAULO" + ad + "6304";
+                return p + PixEngine.crc16(p);
+            },
+            decode: (payload) => {
+                let i = 0; let data = {};
+                try {
+                    while (i < payload.length - 4) {
+                        let tag = payload.substring(i, i + 2);
+                        let len = parseInt(payload.substring(i + 2, i + 4), 10);
+                        let val = payload.substring(i + 4, i + 4 + len);
+                        data[tag] = val; i += 4 + len;
+                    }
+                    return { valor: data['54'] ? parseFloat(data['54']).toFixed(2).replace('.', ',') : "0,00", nome: data['59'] || "RECEBEDOR", payload };
+                } catch { return null; }
             }
+        };
+
+        // --- ESTADO GLOBAL ---
+        let currentKeyType = 'cpf';
+        let savedDebts = JSON.parse(localStorage.getItem('paga_eu_vault_v312')) || [];
+        let html5QrCode = null;
+        let lastGenerated = null;
+
+        // --- MÁSCARAS ---
+        const masks = {
+            cpf: (v) => v.replace(/\D/g, '').substring(0, 11).replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d)/, "$1.$2").replace(/(\d{3})(\d{1,2})$/, "$1-$2"),
+            tel: (v) => v.replace(/\D/g, '').substring(0, 11).replace(/^(\d{2})(\d)/g, "($1) $2").replace(/(\d)(\d{4})$/, "$1-$2"),
+            amount: (v) => {
+                let val = v.replace(/\D/g, '');
+                val = (Number(val) / 100).toFixed(2).replace(".", ",").replace(/(\d)(\d{3}),/g, "$1.$2,");
+                return val ? "R$ " + val : "";
+            }
+        };
+
+        // --- EVENTOS ---
+        document.getElementById('inputKey').addEventListener('input', (e) => {
+            if (currentKeyType === 'cpf' || currentKeyType === 'tel') e.target.value = masks[currentKeyType](e.target.value);
+        });
+        document.getElementById('inputAmount').addEventListener('input', (e) => e.target.value = masks.amount(e.target.value));
+
+        function setKeyType(type) {
+            currentKeyType = type;
+            document.querySelectorAll('.key-type-btn').forEach(b => b.classList.replace('bg-[#002e8a]', 'bg-white'));
+            document.querySelectorAll('.key-type-btn').forEach(b => b.classList.replace('text-white', 'text-slate-400'));
+            document.getElementById('kt-'+type).classList.add('bg-[#002e8a]', 'text-white');
+            document.getElementById('inputKey').value = "";
         }
-        return { valor, nome, chave, raw: payload };
-    }
 
-    // --- SCANNER E PERSISTÊNCIA ---
-    async function switchTab(id, b) {
-        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
-        document.getElementById(id).classList.add('active'); b.classList.add('active');
-        
-        if(id === 'pagar') { startScanner(); renderPending(); }
-        else if(html5QrCode) { await html5QrCode.stop().catch(()=>{}); }
-        
-        if(id==='apoio' && !document.getElementById('qrcode-apoio').innerHTML) {
-            const pay = genPay("52806ce2-7edb-4f89-9003-f8d199feb4f6", "5.00", "PAGA EU APOIO", "DOOM");
-            new QRCode("qrcode-apoio", { text: pay, width: 180, height: 180, colorDark: "#002e8a" });
+        function handleGenerate() {
+            const key = document.getElementById('inputKey').value;
+            const amount = document.getElementById('inputAmount').value.replace("R$ ", "").replace(/\./g, "").replace(",", ".");
+            const name = document.getElementById('inputName').value || "RECEBEDOR";
+            const id = document.getElementById('inputID').value;
+            
+            const payload = PixEngine.generate(key, amount, name, id);
+            lastGenerated = { nome: name, valor: document.getElementById('inputAmount').value, payload };
+            
+            document.getElementById('qrResult').classList.remove('hidden');
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), { text: payload, width: 160, height: 160, colorDark: "#002e8a" });
         }
-    }
 
-    function startScanner() {
-        html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (text) => {
-            let saved = JSON.parse(localStorage.getItem('paga_eu_codes') || "[]");
-            const decoded = decodePixEMV(text);
-            saved.push({ ...decoded, date: new Date().toLocaleString() });
-            localStorage.setItem('paga_eu_codes', JSON.stringify(saved));
-            alert(`Pix de R$ ${decoded.valor.toFixed(2)} salvo com sucesso!`);
-            renderPending();
-        }).catch(()=>{});
-    }
+        function saveCurrentToVault() {
+            saveToVault(lastGenerated);
+            document.getElementById('qrResult').classList.add('hidden');
+            alert("Salvo no Cofre!");
+        }
 
-    function renderPending() {
-        const container = document.getElementById('items-container');
-        const saved = JSON.parse(localStorage.getItem('paga_eu_codes') || "[]");
-        
-        document.getElementById('btn-export-list').style.display = saved.length ? 'block' : 'none';
-        
-        const totalDebitos = saved.reduce((acc, item) => acc + item.valor, 0);
-        document.getElementById('txt-total-debitos').innerText = `R$ ${totalDebitos.toFixed(2).replace('.', ',')}`;
+        function saveToVault(data) {
+            const debt = { ...data, date: new Date().toLocaleString(), id: Date.now() };
+            savedDebts.unshift(debt);
+            localStorage.setItem('paga_eu_vault_v312', JSON.stringify(savedDebts));
+            updateVaultUI();
+        }
 
-        container.innerHTML = saved.map((item) => `
-            <div class="list-item">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                    <strong style="font-size: 13px;">${item.nome}</strong>
-                    <span style="color: var(--danger); font-weight: 800;">R$ ${item.valor.toFixed(2).replace('.', ',')}</span>
-                </div>
-                <div style="font-size: 10px; color: var(--muted); margin-bottom: 8px;">
-                    Chave: ${item.chave} <br> Lançado em: ${item.date}
-                </div>
-                <button class="btn-main" onclick="copyRaw('${item.raw}')" style="padding:8px; font-size:11px; margin:0; background: var(--success);">Copiar Pix p/ Pagar</button>
-            </div>
-        `).join('');
-    }
+        function updateVaultUI() {
+            const list = document.getElementById('debtList');
+            const total = document.getElementById('totalDisplay');
+            list.innerHTML = "";
+            
+            let sum = 0;
+            savedDebts.forEach(d => {
+                sum += parseFloat(d.valor.replace("R$ ", "").replace(/\./g, "").replace(",", "."));
+                list.innerHTML += `
+                    <div class="p-4 bg-slate-50 border rounded-2xl flex justify-between items-center text-left not-italic">
+                        <div><p class="text-xs font-black uppercase text-slate-800">${d.nome}</p><p class="text-[8px] text-slate-400 font-bold">${d.date}</p></div>
+                        <div class="flex items-center gap-3"><p class="font-black text-[#b91c1c] text-sm">${d.valor}</p>
+                        <button onclick="copyPayload('${d.payload}')" class="p-2 bg-white border rounded-lg text-[#002e8a] shadow-sm">📋</button></div>
+                    </div>`;
+            });
+            total.innerText = "R$ " + sum.toFixed(2).replace(".", ",");
+        }
 
-    function exportScannedList() {
-        const saved = JSON.parse(localStorage.getItem('paga_eu_codes') || "[]");
-        const total = saved.reduce((acc, item) => acc + item.valor, 0);
-        
-        let conteudo = `===========================================\n PAGA EU - RELATÓRIO DE DÉBITOS\n===========================================\nDATA DO BACKUP: ${new Date().toLocaleString()}\nTOTAL DEVIDO: R$ ${total.toFixed(2).replace('.', ',')}\n===========================================\n\n`;
-        
-        conteudo += saved.map((i, index) => `[Débito #${index + 1}]\nNOME: ${i.nome}\nVALOR: R$ ${i.valor.toFixed(2).replace('.', ',')}\nCHAVE PIX: ${i.chave}\nDATA: ${i.date}\nCÓDIGO (COPIA E COLA):\n${i.raw}\n-------------------------------------------`).join('\n\n');
+        function copyPayload(p) { navigator.clipboard.writeText(p); alert("Copiado!"); }
 
-        const blob = new Blob([conteudo], { type: 'text/plain' });
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = `Relatorio_Debitos_PagaEu_${Date.now()}.txt`;
-        link.click();
-    }
+        function clearVault() { 
+            if(confirm("Limpar cofre?")) { 
+                savedDebts = []; localStorage.removeItem('paga_eu_vault_v312'); updateVaultUI(); 
+            } 
+        }
 
-    function updateLang(l) {
-        const t = i18n[l]; document.getElementById('txt-title').innerText = t.title;
-        document.getElementById('txt-sub').innerText = t.sub; document.getElementById('btn-generate').innerText = t.b_gen;
-    }
+        // --- SCANNER ---
+        async function startScanner() {
+            document.getElementById('scanner-init').classList.add('hidden');
+            document.getElementById('reader-container').classList.remove('hidden');
+            html5QrCode = new Html5Qrcode("reader");
+            try {
+                await html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (text) => {
+                    const decoded = PixEngine.decode(text);
+                    if (decoded) {
+                        saveToVault({ nome: decoded.nome, valor: "R$ " + decoded.valor, payload: text });
+                        stopScanner();
+                        showTab('vault');
+                    }
+                });
+            } catch (e) { alert("Câmera bloqueada ou sem HTTPS."); stopScanner(); }
+        }
 
-    function copyCode(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Código copiado!"); }
-    function copyRaw(t) { navigator.clipboard.writeText(t); alert("Pix Copiado! Abra o app do banco."); }
-</script>
+        function stopScanner() {
+            if(html5QrCode) html5QrCode.stop().then(() => {
+                document.getElementById('scanner-init').classList.remove('hidden');
+                document.getElementById('reader-container').classList.add('hidden');
+            });
+        }
+
+        // --- NAVEGAÇÃO ---
+        function showTab(tab) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('tab-' + tab).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.replace('bg-white', 'text-slate-400'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('text-[#002e8a]', 'shadow-sm', 'bg-white'));
+            document.getElementById('btn-' + tab).classList.add('bg-white', 'text-[#002e8a]', 'shadow-sm');
+            if(tab !== 'pay') stopScanner();
+        }
+
+        updateVaultUI();
+    </script>
 </body>
 </html>

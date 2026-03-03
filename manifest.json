@@ -1,7 +1,7 @@
 {
   "name": "Paga Eu - Doom do Pix",
   "short_name": "Paga Eu",
-  "description": "Gerador de Pix Offline de alta resiliência e acessibilidade.",
+  "description": "Sistema de gestão e cobrança Pix offline para cenários humanitários.",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#f8fafc",
